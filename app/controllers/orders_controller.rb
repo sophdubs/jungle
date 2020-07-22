@@ -2,7 +2,20 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    @line_items = LineItem.where("order_id = #{params[:id]}")
+    @line_item_details = [];
+    line_items = LineItem.where("order_id = #{params[:id]}")
+    line_items.each {|item| 
+      product = Product.find(item.product_id)
+      item_hash = {}
+      item_hash[:product_id] = item.product_id
+      item_hash[:qty] = item.quantity
+      item_hash[:item_price] = item.item_price_cents
+      item_hash[:total_price] = item.total_price_cents
+      item_hash[:name] = product.name
+      item_hash[:image] = product.image.tiny.to_s
+      item_hash[:description] = product.description
+      @line_item_details.push(item_hash)
+    }
   end
 
   def create
