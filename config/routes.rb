@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   resources :products, only: [:index, :show]
   resources :categories, only: [:show]
+  
+  match 'about' => 'about#show', :via => :get
 
   resource :cart, only: [:show] do
     post   :add_item
