@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resources :categories, only: [:show]
   
   match 'about' => 'about#show', :via => :get
+  get '/signup' => 'users#new'
+  post '/users' => 'users#create'
 
   resource :cart, only: [:show] do
     post   :add_item
